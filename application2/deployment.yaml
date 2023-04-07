@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs2-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nodejs2
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: nodejs2
+    spec:
+      containers:
+      - name: nodejs2
+        image: container-registry.oracle.com/graalvm/nodejs
+        ports:
+        - containerPort: 80
