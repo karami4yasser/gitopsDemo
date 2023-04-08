@@ -1,5 +1,3 @@
-pipeline {
-    agent any
      // Helper function to find an available port
   def findAvailablePort() {
     def socket = new ServerSocket(0)
@@ -7,6 +5,8 @@ pipeline {
     socket.close()
     return port
   }
+pipeline {
+    agent any
     stages {
         stage('Print Branch Name') {
             steps {
