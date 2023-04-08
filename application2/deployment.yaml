@@ -1,19 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nodejs2-deployment
+  name: nginx-deployment2
+  labels:
+    app: nginx2
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: nodejs2
-  replicas: 2 # tells deployment to run 2 pods matching the template
+      app: nginx2
   template:
     metadata:
       labels:
-        app: nodejs2
+        app: nginx2
     spec:
       containers:
-      - name: nodejs2
-        image: container-registry.oracle.com/graalvm/nodejs
+      - name: nginx2
+        image: nginx:1.14.2
         ports:
         - containerPort: 80

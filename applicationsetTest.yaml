@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: testapp
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - path: application1
+          - path: application2
+  template:
+    metadata:
+      name: '{{path}}-testapp'
+    spec:
+      project: test
+      source:
+        repoURL: 'https://github.com/karami4yasser/gitopsDemo.git'
+        targetRevision: NONE #will be overitting by jenkins to set it as the correct branch  
+        path: '{{path}}'
+      destination:
+        name: test #should be test cluster
+        namespace: NONE #will be overriting by the cli comand to match the branch name 
+        server: ''
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
