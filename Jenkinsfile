@@ -3,15 +3,29 @@ pipeline {
     stages {
         stage('Print Branch Name') {
             steps {
-                sh 'echo "Building on branch ${env.GIT_BRANCH}"'
+                echo 'Pulling...' + env.BRANCH_NAME
+            }
+        }
+        stage('Update YAML File') {
+            steps {
+                script {
+                    def yaml = readYaml file: 'applicationSetTest.yaml'
+                    yaml.spec.template.spec.destination.namespace = env.GIT_BRANCH
+                    writeYaml file: 'applicationSetTesti.yaml', data: yaml
+                }
+            }
+        }
+        stage('Print yaml file') {
+            steps {
+                sh 'cat applicationSetTesti.yaml'
             }
         }
         
         stage('ArgoCD Create') {
             steps {
                 withCredentials([string(credentialsId: 'jenkins-deploy-role', variable: 'JENKINS_TOKEN')]) {
-                    sh 'argocd login --username=admin --password=${JENKINS_TOKEN} '
-                    sh 'argocd appset create applicationSetTest.yaml --path ${env.GIT_BRANCH}"  --dest-namespace ${env.GIT_BRANCH}"  --upsert'
+                    sh 'argocd login localhost:8080 --username=admin --password=Pieldetoro1@ --insecure '
+                    sh 'argocd appset create applicationSetTesti.yaml  --upsert'
                 }
             }
         }
