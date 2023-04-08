@@ -18,11 +18,11 @@ spec:
       project: test
       source:
         repoURL: 'https://github.com/karami4yasser/gitopsDemo.git'
-        targetRevision: NONE #will be overitting by jenkins to set it as the correct branch  
+        targetRevision: NONE #will be overitting by jenkins   
         path: '{{path}}'
       destination:
-        name: test #should be test cluster
-        namespace: NONE #will be overriting by the cli comand to match the branch name 
+        name: test 
+        namespace: NONE #will be overitting by jenkins   
         server: ''
       syncPolicy:
         syncOptions:
