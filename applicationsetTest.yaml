@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: branch2-testapp  #will be overitting by jenkins 
+  name: testtest-testapp  #will be overitting by jenkins 
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -13,16 +13,16 @@ spec:
           - path: application2
   template:
     metadata:
-      name: '{{path}}-testapp'
+      name: 'testtest-{{path}}-testapp'
     spec:
       project: test
       source:
         repoURL: 'https://github.com/karami4yasser/gitopsDemo.git'
-        targetRevision: NONE #will be overitting by jenkins   
+        targetRevision: main #will be overitting by jenkins   
         path: '{{path}}'
       destination:
-        name: test 
-        namespace: NONE #will be overitting by jenkins   
+        name: test #will be overitting by jenkins 
+        namespace: default  
         server: ''
       syncPolicy:
         syncOptions:
