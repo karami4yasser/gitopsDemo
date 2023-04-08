@@ -3,8 +3,7 @@ kind: ApplicationSet
 metadata:
   name: prodapp
   namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
+  finalizers: []
 spec:
   generators:
     - list:

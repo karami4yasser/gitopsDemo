@@ -3,8 +3,7 @@ kind: ApplicationSet
 metadata:
   name: testtest-testapp  #will be overitting by jenkins 
   namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
+  finalizers: []
 spec:
   generators:
     - list:
@@ -27,3 +26,6 @@ spec:
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
+        automated:
+          prune: true
+          selfHeal: true
