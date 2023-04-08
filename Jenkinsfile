@@ -18,7 +18,7 @@ pipeline {
       steps {
         script {
           def branchName = env.GIT_BRANCH 
-          def clusterName = "${branchName.hashCode()}"
+          def clusterName = branchName.hashCode()
           def port = findAvailablePort()
          
           // Check if cluster exists
@@ -27,11 +27,11 @@ pipeline {
 
           // Create cluster if it doesn't exist
           if (result != clusterName) {
+            echo "Kind cluster kind-${clusterName} does not exist, creating..."
             // custumization of the cluster config
             def yaml = readYaml file: 'kind-test-cluster-config.yaml'
-            yaml.metadata.networking.apiServerPort = port
+            yaml.networking.apiServerPort = port
             writeYaml file: 'clusterConfig.yaml', data: yaml
-            echo "Kind cluster kind-${clusterName} does not exist, creating..."
             sh "kind create cluster --name ${clusterName} --config clusterConfig.yaml"
              echo "Kind cluster kind-${clusterName} created"
 
