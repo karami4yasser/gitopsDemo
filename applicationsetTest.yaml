@@ -21,12 +21,9 @@ spec:
         targetRevision: main #will be overitting by jenkins   
         path: '{{path}}'
       destination:
-        name: test #will be overitting by jenkins 
-        namespace: default  
+        name: test 
+        namespace: default  #will be overitting by jenkins 
         server: ''
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
-        automated:
-          prune: true
-          selfHeal: false
