@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: prodapp
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - path: application1
+          - path: application2
+  template:
+    metadata:
+      name: '{{path}}-prodapp'
+    spec:
+      project: prod
+      source:
+        repoURL: 'https://github.com/karami4yasser/gitopsDemo.git'
+        targetRevision: main
+        path: '{{path}}'
+      destination:
+        name: prod
+        namespace: default
+        server: ''
+    syncPolicy:
+      syncOptions:
+        - CreateNamespace=true
+      automated:
+        prune: true
+        selfHeal: true
