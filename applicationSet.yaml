@@ -22,9 +22,9 @@ spec:
         name: prod
         namespace: default
         server: ''
-    syncPolicy:
-      syncOptions:
-        - CreateNamespace=true
-      automated:
-        prune: true
-        selfHeal: true
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        automated:
+          prune: true
+          selfHeal: true
