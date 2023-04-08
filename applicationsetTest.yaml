@@ -22,7 +22,9 @@ spec:
         name: test #should be test cluster
         namespace: NONE #will be overriting by the cli comand to match the branch name 
         server: ''
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
+    syncPolicy:
+      syncOptions:
+        - CreateNamespace=true
+      automated:
+        prune: true
+        selfHeal: true
