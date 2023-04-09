@@ -1,10 +1,10 @@
-     // Helper function to find an available port
+/*      // Helper function to find an available port
   def findAvailablePort() {
     def socket = new ServerSocket(0)
     def port = socket.getLocalPort()
     socket.close()
     return 8445
-  } 
+  }  */
 pipeline {
     agent any
     stages {
@@ -14,7 +14,7 @@ pipeline {
             }
         }
         
-        stage('Check if the Kind test cluster exists') {
+/*         stage('Check if the Kind test cluster exists') {
               steps {
                 script {
                   def branchName = env.GIT_BRANCH 
@@ -45,7 +45,7 @@ pipeline {
                   }
                 }
               }
-    } 
+    }  */
     stage('Update ApplicationSet YAML File') {
             steps {
                 script {
@@ -53,7 +53,7 @@ pipeline {
                     yaml.metadata.name = env.GIT_BRANCH + '-testapp'
                     yaml.spec.template.metadata.name = '{{path}}-testapp-' + env.GIT_BRANCH 
                     yaml.spec.template.spec.source.targetRevision = env.GIT_BRANCH
-                    yaml.spec.template.spec.destination.name = env.GIT_BRANCH
+                    yaml.spec.template.spec.destination.namespace = env.GIT_BRANCH
                     writeYaml file: 'applicationSetTestModified.yaml', data: yaml
                 }
             }
