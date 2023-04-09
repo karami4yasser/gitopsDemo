@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: test
+  namespace: argocd
+spec:
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  description: contains test Apps
+  destinations:
+  - name: test
+    namespace: '*'
+    server: https://192.168.8.101:8444
+  roles:
+  - description: jenkins can deploy to test cluster
+    jwtTokens:
+    - iat: 1680907901
+      id: JENKINS_TOKEN
+    name: jenkins-deploy-role
+    policies:
+    - p, proj:test:jenkins-deploy-role, applications, *, test/*, allow
+  sourceRepos:
+  - https://github.com/karami4yasser/gitopsDemo
