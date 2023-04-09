@@ -4,10 +4,13 @@ metadata:
   name: prod
   namespace: argocd
 spec:
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
   description: contains production App
   destinations:
   - name: prod
-    namespace: default
+    namespace: '*'
     server: https://192.168.8.101:8443
   sourceRepos:
   - https://github.com/karami4yasser/gitopsDemo
