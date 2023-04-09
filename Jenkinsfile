@@ -49,7 +49,7 @@ pipeline {
     stage('Update ApplicationSet YAML File') {
             steps {
                 script {
-                    def yaml = readYaml file: 'applicationSetTest.yaml'
+                    def yaml = readYaml file: 'argocdConfig/applicationSetTest.yaml'
                     yaml.metadata.name = env.GIT_BRANCH + '-testapp'
                     yaml.spec.template.metadata.name = '{{path}}-testapp-' + env.GIT_BRANCH 
                     yaml.spec.template.spec.source.targetRevision = env.GIT_BRANCH
