@@ -4,6 +4,8 @@ metadata:
   name: prodapp
   namespace: argocd
   finalizers: []
+  annotations:
+    notifications.argoproj.io/subscribe.on-sync-succeeded.github: ""
 spec:
   generators:
     - list:
@@ -20,7 +22,7 @@ spec:
         targetRevision: main
         path: '{{path}}'
       destination:
-        name: prod
+        name: in-cluster
         namespace: default
         server: ''
       syncPolicy:
