@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-notifications-cm
+data:
+  config.yaml: |
+    triggers:
+      - name : sync-status-unknown:
+        condition: app.status.sync.status == 'Unknown'
+    templates:
+      - name: sync-status-unknown
+        webhook:
+          jenkins:
+            method: POST
+            path: {{.app.metadata.name}}
