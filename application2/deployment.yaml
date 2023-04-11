@@ -2,11 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment2
-  namespace: deploymentns5
+  namespace: deployment
   labels:
     app: nginx2
 spec:
-  replicas: 5
+  replicas: 1
   selector:
     matchLabels:
       app: nginx2
