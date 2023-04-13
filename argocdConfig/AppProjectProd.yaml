@@ -3,14 +3,16 @@ kind: AppProject
 metadata:
   name: prod
   namespace: argocd
+  annotations:
+    notifications.argoproj.io/subscribe.on-deployed.github: ""
 spec:
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
   description: contains production App
   destinations:
-  - name: prod
+  - name: in-cluster
     namespace: '*'
-    server: https://192.168.8.101:8443
+    server:  ''
   sourceRepos:
   - https://github.com/karami4yasser/gitopsDemo

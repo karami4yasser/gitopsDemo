@@ -1,0 +1,5 @@
+kind-prod-cluster-config.yaml
+kind-test-cluster-config.yaml
+argocdConfig/GithubSecret.yaml
+argocdConfig/jenkinsSecret.yaml
+argocdConfig/notificationConfig.yaml
