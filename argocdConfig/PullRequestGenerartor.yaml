@@ -1,29 +1,31 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: prodapp
+  name: testapppullrequest #will be overitting by jenkins 
   namespace: argocd
   finalizers: []
 spec:
   generators:
+    - pullRequest:
+        github:
+          owner: karami4yasser
+          repo: gitopsDemo
     - list:
         elements:
           - path: application1
           - path: application2
   template:
     metadata:
-      name: '{{path}}-prodapp'
-    annotations:
-      notifications.argoproj.io/subscribe.on-sync-running.jenkins: ""
+      name: 'myapp-{{branch}}-{{number}}'
     spec:
-      project: prod
+      project: test
       source:
         repoURL: 'https://github.com/karami4yasser/gitopsDemo.git'
-        targetRevision: main
+        targetRevision: '{{head_sha}}' #will be overitting by jenkins   
         path: '{{path}}'
       destination:
-        name: in-cluster
-        namespace: default
+        name: test 
+        namespace: myapp-{{branch}}-{{number}}  #will be overitting by jenkins 
         server: ''
       syncPolicy:
         syncOptions:
@@ -32,5 +34,3 @@ spec:
         automated:
           prune: true
           selfHeal: true
-          retry:
-            limit: 2
