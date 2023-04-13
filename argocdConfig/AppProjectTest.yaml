@@ -11,7 +11,7 @@ spec:
   destinations:
   - name: test
     namespace: '*'
-    server: https://192.168.8.101:8444
+    server: https://192.168.8.110:8149
   roles:
   - description: jenkins can deploy to test cluster
     jwtTokens:
