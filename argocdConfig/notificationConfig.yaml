@@ -37,27 +37,6 @@ data:
       - github
       triggers:
       - on-sync-failed
-  template.app-sync-status-unknown : |
-    message: |
-      Application {{.app.metadata.name}} is now Umown new version of deployments manifests.
-    jenkins:
-      method: GET
-  template.app-sync-running : |
-    message: |
-      Application {{.app.metadata.name}} is now pending new version of deployments manifests.
-    github:
-      status:
-        state: pending
-        label: "{{.app.metadata.name}}"
-        targetURL: "http://localhost:8080/applications/{{.app.metadata.name}}?operation=true"
-  template.app-sync-succeeded : |
-    message: |
-      Application {{.app.metadata.name}} is now succeeded new version of deployments manifests.
-    github:
-      status:
-        state: success
-        label: "{{.app.metadata.name}}"
-        targetURL: "http://localhost:8080/applications/{{.app.metadata.name}}?operation=true"
   template.app-deployed: |
     message: |
       Application {{.app.metadata.name}} is now running new version of deployments manifests.
@@ -82,15 +61,27 @@ data:
         state: failure
         label: "{{.app.metadata.name}}"
         targetURL: "http://localhost:8080/applications/{{.app.metadata.name}}?operation=true"
-  trigger.on-sync-status-unknown: | 
-    - when: app.status.sync.status in ['Syncing','Unknown']
-      send: [app-sync-status-unknown]
-  trigger.on-sync-running: |
-    - when: app.status.operationState.phase in ['Running']
-      send: [app-sync-running,app-sync-status-unknown]
-  trigger.on-sync-succeeded: |
-    - when: app.status.operationState.phase in ['Succeeded']
-      send: [app-sync-succeeded,app-sync-status-unknown]
+  template.app-sync-running: |
+    message: |
+      Application {{.app.metadata.name}} is now pending new version of deployments manifests.
+    github:
+      status:
+        state: pending
+        label: "{{.app.metadata.name}}"
+        targetURL: "http://localhost:8080/applications/{{.app.metadata.name}}?operation=true"
+  template.app-sync-status-unknown: |
+    message: |
+      Application {{.app.metadata.name}} is now Umown new version of deployments manifests.
+    jenkins:
+      method: GET
+  template.app-sync-succeeded: |
+    message: |
+      Application {{.app.metadata.name}} is now succeeded new version of deployments manifests.
+    github:
+      status:
+        state: success
+        label: "{{.app.metadata.name}}"
+        targetURL: "http://localhost:8080/applications/{{.app.metadata.name}}?operation=true"
   trigger.on-deployed: |
     - when: app.status.operationState.phase in ['Deployed']
       send: [app-deployed,app-sync-status-unknown]
@@ -100,3 +91,13 @@ data:
   trigger.on-sync-failed: |
     - when: app.status.operationState.phase in ['Error', 'Failed']
       send: [app-sync-failed,app-sync-status-unknown]
+  trigger.on-sync-running: |
+    - when: app.status.operationState.phase in ['Running']
+      send: [app-sync-running,app-sync-status-unknown]
+  trigger.on-sync-status-unknown: |
+    - when: app.status.sync.status in ['Syncing','Unknown']
+      send: [app-sync-status-unknown]
+  trigger.on-sync-succeeded: |
+    - when: app.status.operationState.phase in ['Succeeded']
+      send: [app-sync-succeeded,app-sync-status-unknown]
+

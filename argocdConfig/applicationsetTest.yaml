@@ -2,8 +2,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: testtest-testapp  #will be overitting by jenkins 
-  annotations:
-    recipients.argocd-notifications.argoproj.io: webhook:jenkins
   namespace: argocd
   finalizers: []
 spec:

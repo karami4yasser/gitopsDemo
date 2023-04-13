@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: github-token
+type: Opaque
+stringData:
+  url: https://github.com/karami4yasser/gitopsDemo.git
+  password: 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
+  token: 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
+  username: not-used
