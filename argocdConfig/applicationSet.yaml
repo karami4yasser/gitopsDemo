@@ -13,8 +13,6 @@ spec:
   template:
     metadata:
       name: '{{path}}-prodapp'
-    annotations:
-      notifications.argoproj.io/subscribe.on-sync-running.jenkins: ""
     spec:
       project: prod
       source:
@@ -32,5 +30,4 @@ spec:
         automated:
           prune: true
           selfHeal: true
-          retry:
-            limit: 2
+ 
