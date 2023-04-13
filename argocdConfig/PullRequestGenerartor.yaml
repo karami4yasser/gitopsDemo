@@ -6,17 +6,24 @@ metadata:
   finalizers: []
 spec:
   generators:
-    - pullRequest:
-        github:
-          owner: karami4yasser
-          repo: gitopsDemo
-    - list:
-        elements:
-          - path: application1
-          - path: application2
+    # matrix 'parent' generator
+    - matrix:
+        generators:
+          - pullRequest:
+              #requeueAfterSeconds: 2
+              github:
+                owner: karami4yasser
+                repo: gitopsDemo
+                tokenRef:
+                  secretName: github-token
+                  key: token
+          - list:
+              elements:
+                - path: application1
+                - path: application2
   template:
     metadata:
-      name: 'myapp-{{branch}}-{{number}}'
+      name: '{{path}}-{{branch}}-{{number}}'
     spec:
       project: test
       source:
